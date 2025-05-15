@@ -1,0 +1,81 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: ../../docker/frontend
+      dockerfile: Dockerfile
+    image: specranking/frontend:${ENV}
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+    restart: always
+    networks:
+      - specranking-net
+
+  backend:
+    build:
+      context: ../../docker/backend
+      dockerfile: Dockerfile
+    image: specranking/backend:${ENV}
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://${BACKEND_DB_HOST}:${BACKEND_DB_PORT}/specranking
+      - SPRING_DATASOURCE_USERNAME=${BACKEND_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${BACKEND_DB_PASS}
+      - JAVA_OPTS=${BACKEND_JVM_OPTS}
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - specranking-net
+
+  ai:
+    build:
+      context: ../../docker/AI
+      dockerfile: Dockerfile
+    image: specranking/ai:${ENV}
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_PATH=${FASTAPI_MODEL_PATH}
+    restart: always
+    networks:
+      - specranking-net
+
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${BACKEND_DB_PASS}
+      - MYSQL_DATABASE=specranking
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ../../docker/db-init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+    networks:
+      - specranking-net
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "${NGINX_PORT}:80"
+    volumes:
+      - ../../docker/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+      - backend
+      - ai
+    restart: always
+    networks:
+      - specranking-net
+
+networks:
+  specranking-net:
+
+volumes:
+  mysql-data:
