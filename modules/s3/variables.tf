@@ -1,21 +1,27 @@
 variable "bucket_name" {
-  description = "Name of the S3 bucket"
-  type        = string
+  type = string
+}
+
+variable "versioning" {
+  type    = bool
+  default = true
 }
 
 variable "force_destroy" {
-  description = "Whether to force destroy the bucket (including contents)"
-  type        = bool
-  default     = false
+  type    = bool
+  default = false
 }
 
-variable "tags" {
-  description = "Tags to apply to S3 bucket"
-  type        = map(string)
-  default     = {}
+variable "enable_logging" {
+  type    = bool
+  default = false
 }
 
-variable "bucket_policy" {
-  description = "JSON policy to apply to the bucket"
-  type        = string
+variable "logging_target_bucket" {
+  type    = string
+  default = "" # 로그용 버킷을 따로 만들 경우 지정
+}
+
+variable "environment" {
+  type = string
 }

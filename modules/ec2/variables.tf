@@ -1,37 +1,43 @@
-variable "env" {
-    description = "Environment name (dev, stage, prod)"
-    type        = string
-
+variable "name" {
+  description = "Name prefix for resources"
+  type        = string
 }
 
-variable "ami_id"{
-
-    description = "AMI ID to use for EC2 instance"
-    type        = string
+variable "ami_id" {
+  description = "AMI ID to use for the EC2 instances"
+  type        = string
 }
-
 
 variable "instance_type" {
-
-    description = "EC2 instance type"
-    type        = string
-
+  description = "EC2 instance type"
+  type        = string
+  default     = "t3.micro"
 }
 
-variable "subnet_id" {
-    description = "Subnet ID where EC2 instance will be deployed"
-    type        = string
-
+variable "subnet_ids" {
+  description = "List of subnet IDs for the Auto Scaling Group"
+  type        = list(string)
 }
 
-variable "key_name"{
-
-    description = "SSH key pair name"
-    type        = string
+variable "desired_capacity" {
+  description = "Desired number of EC2 instances"
+  type        = number
+  default     = 1
 }
 
-variable "image"{
+variable "min_size" {
+  description = "Minimum number of EC2 instances"
+  type        = number
+  default     = 1
+}
 
-    description = "Docker image to run on EC2"
-    type        = string
+variable "max_size" {
+  description = "Maximum number of EC2 instances"
+  type        = number
+  default     = 2
+}
+
+variable "environment" {
+  description = "Environment name (e.g. dev, prod)"
+  type        = string
 }

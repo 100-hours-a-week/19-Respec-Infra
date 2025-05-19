@@ -1,4 +1,4 @@
-resources "aws_lb" "this" {
+resource "aws_lb" "this" {
 
     name = var.name
     load_balancer_type = var.type
@@ -12,7 +12,7 @@ resources "aws_lb" "this" {
 
 }
 
-resources "aws_lb_target_group" "this" {
+resource "aws_lb_target_group" "this" {
 
     name = var.target_group_name
     port = var.target_group_port
@@ -34,7 +34,7 @@ resources "aws_lb_target_group" "this" {
     tags = var.tags
 }
 
-resources "aws_lb_listener" "http" {
+resource "aws_lb_listener" "http" {
 
     load_balancer_arn = aws_lb.this.arn
     port = 80

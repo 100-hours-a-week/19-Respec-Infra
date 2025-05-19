@@ -1,27 +1,14 @@
-output "instance_id" {
-
-
-    description = "ID of the EC2 instance"
-    value       = aws_instance.this.id
+output "launch_template_id" {
+  description = "ID of the launch template"
+  value       = aws_launch_template.app.id
 }
 
-
-output "public_ip" {
-
-    description = "Public IP of the EC2 instance"
-    value       = aws_instance.this.public_ip
+output "autoscaling_group_name" {
+  description = "Name of the Auto Scaling Group"
+  value       = aws_autoscaling_group.asg.name
 }
 
-output "private_ip" {
-
-    description = "Private IP of the EC2 instance"
-    value       = aws_instance.this.private_ip
-
-}
-
-output "instance_name" {
-
-    description = "Name tag of the EC2 instance"
-    value       = aws_instance.this.tags{"Name"}
-
+output "autoscaling_group_arn" {
+  description = "ARN of the Auto Scaling Group"
+  value       = aws_autoscaling_group.asg.arn
 }
