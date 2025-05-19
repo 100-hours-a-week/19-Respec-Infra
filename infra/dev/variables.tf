@@ -1,3 +1,13 @@
+variable "region" {
+  type    = string
+  default = "ap-northeast-2"
+}
+
+variable "profile" {
+  type    = string
+  default = "default"       # AWS CLI에서 설정한 profile 이름
+}
+
 # 공통 인프라 명칭
 variable "name" {
   description = "Name prefix for all resources"
