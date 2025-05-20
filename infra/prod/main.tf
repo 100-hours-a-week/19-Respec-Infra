@@ -4,7 +4,7 @@ module "ec2" {
   ami_id           = var.ami_id
   instance_type    = var.instance_type
   key_name         = var.key_name
-  subnet_ids       = moduel.vpc.private_subnet_ids
+  subnet_ids       = module.vpc.private_subnet_ids
   desired_capacity = var.desired_capacity
   min_size         = var.min_size
   max_size         = var.max_size
@@ -27,7 +27,7 @@ module "vpc" {
 module "cloudfront" {
   source = "../../modules/cloudfront"
 
-  name                   = "${var.name}-frontend-prod"
+  name                   = "${var.name}-frontend-dev"
   s3_bucket_domain_name  = module.s3.bucket_domain_name
   environment            = var.environment
 }
@@ -36,7 +36,7 @@ module "s3" {
 
     source = "../../modules/s3"
 
-    bucket_name = "${var.name}-bucket-prod"
+    bucket_name = "${var.name}-bucket-dev"
     versioning = true
     force_destroy = false
     enable_logging = true
@@ -51,7 +51,7 @@ module "alb" {
     name = var.name
     vpc_id = module.vpc.vpc_id
     public_subnets = module.vpc.public_subnet_ids
-    target_group_name = "${var.name}-tg-prod"
+    target_group_name = "${var.name}-tg-dev"
     ec2_asg_target = module.ec2.autoscaling_group_name
 
 
@@ -59,7 +59,7 @@ module "alb" {
 
 module "rds" {
   source              = "../../modules/rds"
-  name                = "${var.name}-db-prod"
+  name                = "${var.name}-db-dev"
   engine              = var.db_engine
   engine_version      = var.db_engine_version
   instance_class      = var.db_instance_class
@@ -77,9 +77,9 @@ module "build_fe" {
   source           = "../../modules/codebuild"
   project_name     = "respec-fe-build"
   repo_name        = "19-Respec-FE"
-  branch           = "main"
+  branch           = "dev"
   artifact_bucket  = var.artifact_bucket
-  environment_variables = { ENV = "prod" }
+  environment_variables = { ENV = "dev" }
 }
 
 module "deploy_fe" {
@@ -95,7 +95,7 @@ module "pipeline_fe" {
   name               = "respec-fe-pipeline"
   github_owner       = var.github_owner
   github_repo        = "19-Respec-FE"
-  github_branch      = "main"
+  github_branch      = "dev"
   codedeploy_app     = module.deploy_fe.app_name
   deployment_group   = module.deploy_fe.deployment_group_name
   codebuild_project  = module.build_fe.project_name
@@ -107,9 +107,9 @@ module "build_be" {
   source           = "../../modules/codebuild"
   project_name     = "respec-be-build"
   repo_name        = "19-Respec-BE"
-  branch           = "main"
+  branch           = "dev"
   artifact_bucket  = var.artifact_bucket
-  environment_variables = { ENV = "prod" }
+  environment_variables = { ENV = "dev" }
 }
 
 module "deploy_be" {
@@ -125,7 +125,7 @@ module "pipeline_be" {
   name               = "respec-be-pipeline"
   github_owner       = var.github_owner
   github_repo        = "19-Respec-BE"
-  github_branch      = "main"
+  github_branch      = "dev"
   codedeploy_app     = module.deploy_be.app_name
   deployment_group   = module.deploy_be.deployment_group_name
   codebuild_project  = module.build_be.project_name

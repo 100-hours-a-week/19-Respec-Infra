@@ -1,27 +1,69 @@
-resources "aws_s3_bucket" "this" {
+resource "aws_s3_bucket" "this" {
+  bucket = var.bucket_name
 
-    bucket = var.bucket_name
+  force_destroy = var.force_destroy
 
-    force_destroy = var.force_destroy
-
-    tags = var.tags
-
-
+  tags = {
+    Name        = var.bucket_name
+    Environment = var.environment
+  }
 }
 
-resources "aws_s3_bucket_public_access_block" "this" {
+resource "aws_s3_bucket_versioning" "this" {
+  bucket = aws_s3_bucket.this.id
 
-    bucket = aws_s3_bucket.this.id
-
-    block_public_acts = true
-    block_public_policy = false
-    ignore_public_acts = true
-    restrict_public_buckets = false
-
+  versioning_configuration {
+    status = var.versioning ? "Enabled" : "Suspended"
+  }
 }
 
-resources "aws_s3_bucket_policy" "this" {
+resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
+  bucket = aws_s3_bucket.this.id
 
-    bucket = aws_s3_bucket.this.id
-    policy = var.aws_s3_bucket_policy
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "this" {
+  bucket = aws_s3_bucket.this.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_logging" "this" {
+  count  = var.enable_logging ? 1 : 0
+  bucket = aws_s3_bucket.this.id
+
+  target_bucket = var.logging_target_bucket
+  target_prefix = "${var.bucket_name}/logs/"
+}
+
+resource "aws_s3_bucket_policy" "allow_cloudfront" {
+  bucket = var.s3_bucket_name
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid       = "AllowCloudFrontOAC",
+        Effect    = "Allow",
+        Principal = {
+          Service = "cloudfront.amazonaws.com"
+        },
+        Action    = "s3:GetObject",
+        Resource  = "arn:aws:s3:::${var.s3_bucket_name}/*",
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = module.cloudfront.cloudfront_distribution_arn
+          }
+        }
+      }
+    ]
+  })
 }
