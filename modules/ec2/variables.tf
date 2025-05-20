@@ -41,3 +41,9 @@ variable "environment" {
   description = "Environment name (e.g. dev, prod)"
   type        = string
 }
+
+variable "key_name" {
+  description = "SSH key name for EC2 instances"
+  type        = string
+  default     = null
+}

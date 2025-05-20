@@ -43,3 +43,27 @@ resource "aws_s3_bucket_logging" "this" {
   target_bucket = var.logging_target_bucket
   target_prefix = "${var.bucket_name}/logs/"
 }
+
+resource "aws_s3_bucket_policy" "allow_cloudfront" {
+  bucket = var.s3_bucket_name
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid       = "AllowCloudFrontOAC",
+        Effect    = "Allow",
+        Principal = {
+          Service = "cloudfront.amazonaws.com"
+        },
+        Action    = "s3:GetObject",
+        Resource  = "arn:aws:s3:::${var.s3_bucket_name}/*",
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = module.cloudfront.cloudfront_distribution_arn
+          }
+        }
+      }
+    ]
+  })
+}
