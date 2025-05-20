@@ -4,7 +4,7 @@ module "ec2" {
   ami_id           = var.ami_id
   instance_type    = var.instance_type
   key_name         = var.key_name
-  subnet_ids       = moduel.vpc.private_subnet_ids
+  subnet_ids       = module.vpc.private_subnet_ids
   desired_capacity = var.desired_capacity
   min_size         = var.min_size
   max_size         = var.max_size
