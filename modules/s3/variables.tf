@@ -25,3 +25,9 @@ variable "logging_target_bucket" {
 variable "environment" {
   type = string
 }
+
+variable "cloudfront_distribution_arn" {
+  description = "CloudFront 배포의 ARN"
+  type        = string
+  default     = null  # 선택적 사용을 원한다면 default 추가 가능
+}

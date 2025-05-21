@@ -22,9 +22,6 @@ resource "aws_codebuild_project" "this" {
     buildspec = var.buildspec_file
   }
 
-  cache {
-    type = "LOCAL"
-  }
 
   logs_config {
     cloudwatch_logs {

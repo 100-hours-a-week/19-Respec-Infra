@@ -22,7 +22,10 @@ resource "aws_nat_gateway" "nat"{
 
     allocation_id = aws_eip.nat.id
     subnet_id = aws_subnet.public[0].id
-    tags = [name = "main-nat"]
+    tags = {
+
+        Name = "main-nat"
+    }
 
 }
 
@@ -31,10 +34,10 @@ resource "aws_eip" "nat"{
     domain = "vpc"
 }
 
-resource "aws-subnet" "public"{
+resource "aws_subnet" "public"{
     count = length(var.public_subnet_cidrs)
 
-    vpc_id              = aws_vpc.main.vpc_id
+    vpc_id              = aws_vpc.main.id
     cidr_block          = var.public_subnet_cidrs[count.index]
     availability_zone   = element(var.azs, count.index)
     map_public_ip_on_launch = true
@@ -114,11 +117,70 @@ resource "aws_route_table_association" "private_app" {
     route_table_id = aws_route_table.private.id
 }
 
-resource "aws_route_table_association" "private_db{
+resource "aws_route_table_association" "private_db"{
 
     count = length(aws_subnet.private_db)
     subnet_id = aws_subnet.private_db[count.index].id
-    route_table_id = aws_route_table.private.identifier
+    route_table_id = aws_route_table.private.id
 
 
+}
+
+### ALB용 보안 그룹 ###
+resource "aws_security_group" "alb_sg" {
+  name        = "${var.env}-alb-sg"
+  description = "Allow HTTP and HTTPS traffic to ALB"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.env}-alb-sg"
+  }
+}
+
+### RDS용 보안 그룹 ###
+resource "aws_security_group" "rds_sg" {
+  name        = "${var.env}-rds-sg"
+  description = "Allow DB access from VPC"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    # 보안을 위해 EC2 SG를 지정하는 게 일반적이지만,
+    # 여기선 예제로 VPC 내부 허용
+    cidr_blocks = [var.cidr_block]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.env}-rds-sg"
+  }
 }

@@ -72,3 +72,8 @@ variable "health_check_path" {
   type        = string
   default     = "/"
 }
+
+variable "acm_certificate_arn" {
+  description = "ACM에서 발급받은 인증서의 ARN"
+  type        = string
+}

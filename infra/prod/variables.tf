@@ -36,10 +36,6 @@ variable "key_name" {
   type        = string
 }
 
-variable "subnet_ids" {
-  description = "Subnet IDs for EC2 Auto Scaling Group"
-  type        = list(string)
-}
 
 variable "desired_capacity" {
   type        = number
@@ -116,12 +112,33 @@ variable "artifact_bucket" {
 }
 
 # CodeBuild & CodePipeline
-variable "repo_name" {
-  description = "GitHub repository name"
-  type        = string
-}
+# variable "repo_name" {
+#   description = "GitHub repository name"
+#   type        = string
+# }
 
 variable "github_owner" {
   description = "GitHub 사용자 또는 조직명"
+  type        = string
+}
+
+variable "pipeline_role_arn" {
+  description = "IAM Role ARN for CodePipeline"
+  type        = string
+}
+
+variable "github_token" {
+  description = "GitHub Personal Access Token"
+  type        = string
+  sensitive   = true
+}
+
+variable "codebuild_service_role_arn" {
+  description = "IAM role ARN for CodeBuild"
+  type        = string
+}
+
+variable "acm_certificate_arn" {
+  description = "ACM 인증서 ARN"
   type        = string
 }
