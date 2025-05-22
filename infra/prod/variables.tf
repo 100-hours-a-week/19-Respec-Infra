@@ -104,11 +104,25 @@ variable "db_password" {
   type      = string
   sensitive = true
 }
+variable "monitoring_interval" {
+  description = "Enhanced Monitoring interval for RDS"
+  type        = number
+  default     = 0
+}
 
+
+variable "monitoring_role_arn" {
+  type    = string
+  default = null
+}
 # S3/CloudFront
 variable "artifact_bucket" {
   description = "Artifact S3 bucket name for CodePipeline/CodeBuild"
   type        = string
+}
+variable "logging_target_bucket" {
+  type        = string
+  description = "Bucket to receive access logs"
 }
 
 # CodeBuild & CodePipeline
@@ -117,26 +131,9 @@ variable "artifact_bucket" {
 #   type        = string
 # }
 
-variable "github_owner" {
-  description = "GitHub 사용자 또는 조직명"
-  type        = string
-}
 
-variable "pipeline_role_arn" {
-  description = "IAM Role ARN for CodePipeline"
-  type        = string
-}
 
-variable "github_token" {
-  description = "GitHub Personal Access Token"
-  type        = string
-  sensitive   = true
-}
 
-variable "codebuild_service_role_arn" {
-  description = "IAM role ARN for CodeBuild"
-  type        = string
-}
 
 variable "acm_certificate_arn" {
   description = "ACM 인증서 ARN"
