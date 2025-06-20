@@ -1,7 +1,0 @@
- 
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: placeholder
-data:
-  note: "This is just a placeholder to create the directory"
