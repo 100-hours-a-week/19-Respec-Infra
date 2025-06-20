@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backend-main-dev                       # 앱 이름 (Argo CD UI에서 보임)
+  namespace: argocd                            # Argo CD가 설치된 네임스페이스
+spec:
+  project: default                             # Argo CD Project (기본 사용)
+  source:
+    repoURL: https://github.com/100-hours-a-week/19-Respec-Infra.git   # 🔁 여기를 실제 Git 리포지토리 주소로 수정
+    targetRevision: main                       # Git 브랜치
+    path: helm/backend-main                    # Helm Chart 경로
+    helm:
+      valueFiles:
+        - values/dev.yaml                      # 🔥 dev 환경용 값
+  destination:
+    server: https://kubernetes.default.svc     # 클러스터 내 기본 주소 (Argo CD가 내부 배포용으로 씀)
+    namespace: backend-dev                     # 🔥 실제 dev 앱이 배포될 네임스페이스
+  syncPolicy:
+    automated:
+      selfHeal: true                           # 쿠버 리소스가 바뀌면 Git 기준으로 되돌림
+      prune: true                              # Git에 없어진 리소스는 삭제
