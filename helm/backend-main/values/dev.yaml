@@ -1,8 +1,8 @@
 replicaCount: 2
 
 image:
-  repository: 123456789012.dkr.ecr.ap-northeast-2.amazonaws.com/backend-main
-  tag: latest  # ✅ CI가 여기를 자동으로 수정함
+  repository: 115313776476.dkr.ecr.ap-northeast-2.amazonaws.com/specranking-backend-dev
+  tag: dev-placeholder  # 이 줄은 CI가 자동 수정하니까 어떤 값이든 상관 없음
   pullPolicy: Always
 
 service:
