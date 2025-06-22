@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: 115313776476.dkr.ecr.ap-northeast-2.amazonaws.com/specranking-backend-dev
-  tag: dev-placeholder  # 이 줄은 CI가 자동 수정하니까 어떤 값이든 상관 없음
+  tag: dev-1a0f0ec
   pullPolicy: Always
 
 service:
