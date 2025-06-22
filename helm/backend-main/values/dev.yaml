@@ -5,6 +5,10 @@ image:
   tag: dev-1a0f0ec
   pullPolicy: Always
 
+imagePullSecrets:
+  - name: ecr-secret
+
+
 service:
   type: ClusterIP
   port: 80
