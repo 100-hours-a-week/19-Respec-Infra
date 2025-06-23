@@ -14,9 +14,7 @@ jobs:
       - name: Checkout Infra Repo
         uses: actions/checkout@v3
 
-      # 필요시 Helm 검증 도구 넣을 수도 있음 (옵션)
-
-      - name: ✅ Values.yaml 수정됨 확인 또는 필요 시 변경 로직 삽입
+      - name: Values.yaml 수정됨 확인 또는 필요 시 변경 로직 삽입
         run: echo "ArgoCD가 이 변경을 감지하여 자동 배포할 예정입니다."
 
       - name: Validate all YAML files
