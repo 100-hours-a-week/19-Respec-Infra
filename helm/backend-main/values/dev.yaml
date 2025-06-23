@@ -17,9 +17,13 @@ service:
 ingress:
   enabled: true
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/group.name: specranking-apps
   hosts:
-    - host: dev.backend.example.com
+    - host: dev.specranking.net
       paths:
         - path: /
           pathType: Prefix
@@ -33,13 +37,13 @@ resources:
     cpu: 500m
     memory: 512Mi
 
-env:
-  - name: SPRING_PROFILES_ACTIVE
-    value: dev
-  - name: OTEL_EXPORTER_OTLP_ENDPOINT
-    value: http://otel-collector.monitoring.svc:4317
+# env:
+#   - name: SPRING_PROFILES_ACTIVE
+#     value: dev
+#   - name: OTEL_EXPORTER_OTLP_ENDPOINT
+#     value: http://otel-collector.monitoring.svc:4317
 
-podAnnotations:
-  prometheus.io/scrape: "true"
-  prometheus.io/path: "/actuator/prometheus"
-  prometheus.io/port: "8080"
+# podAnnotations:
+#   prometheus.io/scrape: "true"
+#   prometheus.io/path: "/actuator/prometheus"
+#   prometheus.io/port: "8080"
