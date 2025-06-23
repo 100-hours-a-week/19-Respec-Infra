@@ -20,14 +20,18 @@ ingress:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:123456789012:certificate/abcd-efgh-ijkl
     alb.ingress.kubernetes.io/group.name: specranking-apps
   hosts:
-    - host: dev.specranking.net
+    - host: dev.specranking.com
       paths:
         - path: /
           pathType: Prefix
-  tls: []
+  tls:
+    - hosts:
+        - dev.specranking.com
+
 
 resources:
   requests:
