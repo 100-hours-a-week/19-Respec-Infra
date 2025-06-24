@@ -10,14 +10,17 @@ spec:
       template:
         spec:
           serviceAccountName: ecr-refresh-sa
+          restartPolicy: OnFailure
           containers:
           - name: ecr-login
-            image: amazonlinux:2
+            image: amazon/aws-cli
             command:
               - /bin/sh
               - -c
               - |
-                yum -y install aws-cli && \
+                apk add --no-cache curl && \
+                curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+                chmod +x kubectl && mv kubectl /usr/local/bin/ && \
                 aws ecr get-login-password --region ap-northeast-2 | \
                 kubectl create secret docker-registry ecr-secret \
                   --docker-server=115313776476.dkr.ecr.ap-northeast-2.amazonaws.com \
@@ -25,4 +28,3 @@ spec:
                   --docker-password="$(cat -)" \
                   --namespace={{ .Release.Namespace }} \
                   --dry-run=client -o yaml | kubectl apply -f -
-          restartPolicy: OnFailure
