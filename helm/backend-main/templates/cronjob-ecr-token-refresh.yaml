@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ecr-token-refresh
+  namespace: {{ .Release.Namespace }}
+spec:
+  schedule: "0 */6 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: ecr-refresh-sa
+          containers:
+          - name: ecr-login
+            image: amazonlinux:2
+            command:
+              - /bin/sh
+              - -c
+              - |
+                yum -y install aws-cli && \
+                aws ecr get-login-password --region ap-northeast-2 | \
+                kubectl create secret docker-registry ecr-secret \
+                  --docker-server=115313776476.dkr.ecr.ap-northeast-2.amazonaws.com \
+                  --docker-username=AWS \
+                  --docker-password="$(cat -)" \
+                  --namespace={{ .Release.Namespace }} \
+                  --dry-run=client -o yaml | kubectl apply -f -
+          restartPolicy: OnFailure
