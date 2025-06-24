@@ -25,5 +25,4 @@ spec:
               value: {{ .Values.env.redisHost | quote }}
           ports:
             - containerPort: {{ .Values.containerPort }}
-            containerPort: 8080
 
