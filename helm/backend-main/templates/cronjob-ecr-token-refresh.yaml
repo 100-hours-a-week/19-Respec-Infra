@@ -28,11 +28,12 @@ spec:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:
-                      name: backend-secret
-                      key: awsAccessKeyId
+                      name: aws-credentials-secret
+                      key: awsAccessKey
                 - name: AWS_SECRET_ACCESS_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: backend-secret
+                      name: aws-credentials-secret
                       key: awsSecretAccessKey
+
           restartPolicy: OnFailure
