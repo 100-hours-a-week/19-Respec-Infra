@@ -1,0 +1,12 @@
+# infra/helm/redis/dev/values.yaml
+architecture: standalone
+
+auth:
+  enabled: false  # 개발용: 비밀번호 없이 사용
+
+master:
+  persistence:
+    enabled: false  # 개발용: 디스크 저장 없이 ephemeral
+
+metrics:
+  enabled: true
