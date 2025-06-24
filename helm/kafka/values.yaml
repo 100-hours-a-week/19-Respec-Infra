@@ -13,7 +13,7 @@ source:
           enabled: false
       persistence:
         enabled: true
-        storageClass: gp2 # ← 여기 반드시 존재하는 StorageClass로
+        storageClass: gp2-csi # ← 여기 반드시 존재하는 StorageClass로
         size: 8Gi
 destination:
   server: https://kubernetes.default.svc
