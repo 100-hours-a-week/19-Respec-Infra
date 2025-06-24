@@ -7,7 +7,7 @@ image:
 
 imagePullSecrets:
   - name: ecr-secret
-# 이건 둘 다 바꿔야할 듯
+
 service:
   type: ClusterIP
   port: 80
@@ -22,5 +22,6 @@ resources:
     memory: 256Mi
 
 env:
-  - name: SPRING_PROFILES_ACTIVE
-    value: dev
+  SPRING_PROFILES_ACTIVE: dev
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka.kafka.svc.cluster.local:9092
+  SPRING_REDIS_HOST: redis.redis.svc.cluster.local
