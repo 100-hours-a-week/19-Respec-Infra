@@ -32,7 +32,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: /api/health
               port: {{ .Values.service.targetPort }}
             initialDelaySeconds: 300
             periodSeconds: 10
