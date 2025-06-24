@@ -38,7 +38,7 @@ spec:
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /actualtor/health
+              path: /api/health
               port: {{ .Values.service.targetPort }}
             initialDelaySeconds: 300
             periodSeconds: 5
