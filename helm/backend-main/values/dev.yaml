@@ -41,6 +41,11 @@ resources:
   limits:
     cpu: 500m
     memory: 512Mi
+env:
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
 
 # env:
 #   - name: SPRING_PROFILES_ACTIVE
