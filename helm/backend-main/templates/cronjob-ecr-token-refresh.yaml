@@ -2,7 +2,6 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: ecr-token-refresh
-  namespace: {{ .Release.Namespace }}
 spec:
   schedule: "0 */6 * * *"
   jobTemplate:
@@ -12,19 +11,29 @@ spec:
           serviceAccountName: ecr-refresh-sa
           restartPolicy: OnFailure
           containers:
-          - name: ecr-login
-            image: amazon/aws-cli
-            command:
-              - /bin/sh
-              - -c
-              - |
-                apk add --no-cache curl && \
-                curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
-                chmod +x kubectl && mv kubectl /usr/local/bin/ && \
-                aws ecr get-login-password --region ap-northeast-2 | \
-                kubectl create secret docker-registry ecr-secret \
-                  --docker-server=115313776476.dkr.ecr.ap-northeast-2.amazonaws.com \
-                  --docker-username=AWS \
-                  --docker-password="$(cat -)" \
-                  --namespace={{ .Release.Namespace }} \
-                  --dry-run=client -o yaml | kubectl apply -f -
+            - name: ecr-login
+              image: bitnami/kubectl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+                  unzip awscliv2.zip && ./aws/install && \
+                  aws ecr get-login-password --region ap-northeast-2 | \
+                  kubectl create secret docker-registry ecr-secret \
+                    --docker-server=115313776476.dkr.ecr.ap-northeast-2.amazonaws.com \
+                    --docker-username=AWS \
+                    --docker-password="$(cat -)" \
+                    --namespace=backend-main \
+                    --dry-run=client -o yaml | kubectl apply -f -
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: backend-secret
+                      key: awsAccessKey
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backend-secret
+                      key: awsSecretKey
