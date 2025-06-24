@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chatconsumer.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "chatconsumer.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "chatconsumer.name" . }}
+    spec:
+      containers:
+        - name: chatconsumer
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.env.profile | quote }}
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: {{ .Values.env.kafkaBootstrap | quote }}
+            - name: SPRING_REDIS_HOST
+              value: {{ .Values.env.redisHost | quote }}
+          ports:
+            - containerPort: {{ .Values.containerPort }}
