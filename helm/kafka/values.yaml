@@ -1,0 +1,19 @@
+replicaCount: 3  # Kafka 브로커 3개
+
+zookeeper:
+  enabled: true
+  replicaCount: 3
+
+auth:
+  clientProtocol: plaintext
+  enabled: false  # 인증 비활성화 (개발용)
+
+persistence:
+  enabled: false  # 개발용이므로 저장소 비활성화
+
+externalAccess:
+  enabled: false
+
+metrics:
+  kafka:
+    enabled: true
