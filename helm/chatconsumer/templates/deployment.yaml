@@ -12,17 +12,16 @@ spec:
       labels:
         app: {{ include "chatconsumer.name" . }}
     spec:
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: chatconsumer
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: {{ .Values.env.profile | quote }}
-            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-              value: {{ .Values.env.kafkaBootstrap | quote }}
-            - name: SPRING_REDIS_HOST
-              value: {{ .Values.env.redisHost | quote }}
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
           ports:
             - containerPort: {{ .Values.containerPort }}
-
