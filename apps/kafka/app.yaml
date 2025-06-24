@@ -1,19 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kafka
+  name: kafka-dev
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
   source:
-    repoURL: https://github.com/100-hours-a-week/19-Respec-Infra.git
-    targetRevision: main
-    path: helm/kafka
+    chart: kafka
+    repoURL: https://charts.bitnami.com/bitnami
+    targetRevision: 26.5.2  # chart 버전 (bitnami/kafka)
+    helm:
+      valueFiles:
+        - helm/kafka/values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: kafka
+    namespace: kafka-dev
   syncPolicy:
     automated:
       prune: true
