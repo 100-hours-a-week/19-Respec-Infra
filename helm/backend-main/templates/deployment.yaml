@@ -32,15 +32,15 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           livenessProbe:
             httpGet:
-              path: /api/health
+              path: /actuator/health
               port: {{ .Values.service.targetPort }}
-            initialDelaySeconds: 15
+            initialDelaySeconds: 25
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /
+              path: /actualtor/health
               port: {{ .Values.service.targetPort }}
-            initialDelaySeconds: 5
+            initialDelaySeconds: 35
             periodSeconds: 5
 
           volumeMounts:
