@@ -12,12 +12,11 @@ spec:
           serviceAccountName: ecr-refresh-sa
           containers:
             - name: ecr-login
-              image: bitnami/kubectl:latest
+              image: mesosphere/aws-cli:latest  # 이 이미지에 aws-cli와 kubectl 둘 다 포함됨
               command:
                 - /bin/sh
                 - -c
                 - |
-                  apt update && apt install -y awscli && \
                   aws ecr get-login-password --region ap-northeast-2 | \
                   kubectl create secret docker-registry backend-secret \
                     --docker-server=115313776476.dkr.ecr.ap-northeast-2.amazonaws.com \
@@ -25,5 +24,4 @@ spec:
                     --docker-password="$(cat -)" \
                     --namespace=backend-main \
                     --dry-run=client -o yaml | kubectl apply -f -
-
           restartPolicy: OnFailure
