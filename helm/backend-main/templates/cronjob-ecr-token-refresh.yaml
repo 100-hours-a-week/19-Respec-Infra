@@ -4,24 +4,24 @@ metadata:
   name: ecr-token-refresh
   namespace: backend-main
 spec:
-  schedule: "0 */6 * * *"
+  schedule: "0 */6 * * *"  # 6시간마다 실행
   jobTemplate:
     spec:
       template:
         spec:
           serviceAccountName: ecr-refresh-sa
           containers:
-            - name: ecr-login
-              image: mesosphere/aws-cli:latest  # 이 이미지에 aws-cli와 kubectl 둘 다 포함됨
-              command:
-                - /bin/sh
-                - -c
-                - |
-                  aws ecr get-login-password --region ap-northeast-2 | \
-                  kubectl create secret docker-registry backend-secret \
-                    --docker-server=115313776476.dkr.ecr.ap-northeast-2.amazonaws.com \
-                    --docker-username=AWS \
-                    --docker-password="$(cat -)" \
-                    --namespace=backend-main \
-                    --dry-run=client -o yaml | kubectl apply -f -
+          - name: ecr-login
+            image: 115313776476.dkr.ecr.ap-northeast-2.amazonaws.com/specranking/etc:ecr-kubectl
+            command:
+              - /bin/sh
+              - -c
+              - |
+                aws ecr get-login-password --region ap-northeast-2 | \
+                kubectl create secret docker-registry backend-secret \
+                  --docker-server=115313776476.dkr.ecr.ap-northeast-2.amazonaws.com \
+                  --docker-username=AWS \
+                  --docker-password="$(cat -)" \
+                  --namespace=backend-main \
+                  --dry-run=client -o yaml | kubectl apply -f -
           restartPolicy: OnFailure
