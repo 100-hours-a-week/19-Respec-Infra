@@ -17,6 +17,7 @@ service:
 
 ingress:
   enabled: true
+  ingressClassName: alb 
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
