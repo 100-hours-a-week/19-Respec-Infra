@@ -11,8 +11,8 @@ imagePullSecrets:
 service:
   type: ClusterIP
   port: 80
-  targetPort: 8080
-containerPort: 8080
+  targetPort: 9090
+containerPort: 9090
 
 resources:
   requests:
