@@ -29,7 +29,7 @@ ingress:
   hosts:
     - host: dev.specranking.net
       paths:
-        - path: /chat
+        - path: /ws/chat
           pathType: Prefix
           backend:
             service:
