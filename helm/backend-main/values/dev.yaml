@@ -28,14 +28,14 @@ ingress:
 
   hosts:
     - host: dev.specranking.net
-      paths:
-        - path: /ws/chat
-          pathType: Prefix
-          backend:
-            service:
-              name: chatconsumer
-              port:
-                number: 80
+      # paths:
+      #   - path: /ws/chat
+      #     pathType: Prefix
+      #     backend:
+      #       service:
+      #         name: chatconsumer
+      #         port:
+      #           number: 80
 
         - path: /
           pathType: Prefix
