@@ -17,24 +17,37 @@ service:
 
 ingress:
   enabled: true
-  ingressClassName: alb 
+  ingressClassName: alb
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
-#인증서 arn
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:115313776476:certificate/25a254b7-38c9-4654-9da7-112f0de38ffc
     alb.ingress.kubernetes.io/group.name: specranking-apps
-hosts:
-  - host: dev.specranking.net  
-    paths:
-      - path: /
-        pathType: Prefix
-tls:
-  - hosts:
-      - dev.specranking.net    
 
+  hosts:
+    - host: api.dev.specranking.net
+      paths:
+        - path: /ws/chat
+          pathType: Prefix
+          backend:
+            service:
+              name: chatconsumer
+              port:
+                number: 80
+
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: backend-main
+              port:
+                number: 8080
+
+  tls:
+    - hosts:
+        - api.dev.specranking.net
 
 resources:
   requests:
