@@ -3,12 +3,12 @@
 backend-main
 {{- end }}
 
-{{/* 전체 이름: 기본은 Release Name 사용 */}}
+{{/* 전체 이름 */}}
 {{- define "backend-main.fullname" -}}
-{{ .Release.Name }}
+{{ .Release.Name }}-{{ include "backend-main.name" . }}
 {{- end }}
 
-{{/* 공통 라벨 정의 (선택사항) */}}
+{{/* 공통 라벨 정의 */}}
 {{- define "backend-main.labels" -}}
 app.kubernetes.io/name: {{ include "backend-main.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
