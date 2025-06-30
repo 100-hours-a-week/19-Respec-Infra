@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "backend-main.fullname" . }}
   labels:
-    app: {{ include "backend-main.name" . }}
+    {{- include "backend-main.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -13,9 +13,6 @@ spec:
     metadata:
       labels:
         app: {{ include "backend-main.name" . }}
-      annotations:
-        {{- toYaml .Values.podAnnotations | nindent 8 }}
-
     spec:
       imagePullSecrets:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
@@ -42,7 +39,6 @@ spec:
               port: {{ .Values.service.targetPort }}
             initialDelaySeconds: 300
             periodSeconds: 5
-
           volumeMounts:
             - name: config-volume
               mountPath: /app/config/application.properties
@@ -51,4 +47,4 @@ spec:
       volumes:
         - name: config-volume
           secret:
-            secretName: backend-main-properties
+            secretName: {{ include "backend-main.fullname" . }}-properties
