@@ -1,21 +1,38 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kafka-dev
+  name: kafka
   namespace: argocd
 spec:
   project: default
   source:
-    chart: kafka
     repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 26.5.2  # chart 버전 (bitnami/kafka)
+    targetRevision: 26.4.2
+    chart: kafka
     helm:
-      valueFiles:
-        - helm/kafka/values.yaml
+      values: |
+        replicaCount: 3
+        auth:
+          enabled: false
+        zookeeper:
+          auth:
+            enabled: false
+        persistence:
+          enabled: true
+          size: 8Gi
+          storageClass: gp2-2b
+        controller:
+          config:
+            advertised.listeners: "PLAINTEXT://kafka.kafka.svc.cluster.local:9092"
+          listeners:
+            PLAINTEXT:
+              protocol: PLAINTEXT
   destination:
     server: https://kubernetes.default.svc
-    namespace: kafka-dev
+    namespace: kafka
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
