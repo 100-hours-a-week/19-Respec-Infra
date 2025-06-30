@@ -22,11 +22,13 @@ spec:
           size: 8Gi
           storageClass: gp2-2b
         controller:
-          config:
-            advertised.listeners: "PLAINTEXT://kafka.kafka.svc.cluster.local:9092"
+          configOverrides:
+            server:
+              - advertised.listeners=PLAINTEXT://kafka.kafka.svc.cluster.local:9092
           listeners:
             PLAINTEXT:
               protocol: PLAINTEXT
+
   destination:
     server: https://kubernetes.default.svc
     namespace: kafka
