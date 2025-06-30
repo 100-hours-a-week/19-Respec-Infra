@@ -27,7 +27,7 @@ ingress:
     alb.ingress.kubernetes.io/group.name: specranking-apps
 
   hosts:
-    - host: dev.specranking.net
+    - host: api.dev.specranking.net
       paths:
         - path: /ws/chat
           pathType: Prefix
