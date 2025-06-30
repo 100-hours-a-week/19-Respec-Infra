@@ -33,7 +33,7 @@ ingress:
           pathType: Prefix
           backend:
             service:
-              name: chatconsumer
+              name: backend-main
               port:
                 number: 80
                 
