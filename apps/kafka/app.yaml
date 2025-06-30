@@ -7,8 +7,8 @@ spec:
   project: default
   source:
     repoURL: https://charts.bitnami.com/bitnami
-    chart: kafka
     targetRevision: 26.4.2
+    chart: kafka
     helm:
       values: |
         replicaCount: 3
@@ -21,13 +21,11 @@ spec:
           enabled: true
           size: 8Gi
           storageClass: gp2-2b
-        controller:
-          configOverrides:
-            server:
-              - advertised.listeners=PLAINTEXT://kafka.kafka.svc.cluster.local:9092
-          listeners:
-            PLAINTEXT:
-              protocol: PLAINTEXT
+        listeners:
+          client:
+            protocol: PLAINTEXT
+        advertisedListeners:
+          client: PLAINTEXT://kafka.kafka.svc.cluster.local:9092
   destination:
     server: https://kubernetes.default.svc
     namespace: kafka
