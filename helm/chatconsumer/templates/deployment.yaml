@@ -18,18 +18,19 @@ spec:
         - name: config-volume
           secret:
             secretName: chatconsumer-properties
-      containers:
-        - name: chatconsumer
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            {{- range $key, $value := .Values.env }}
-            - name: {{ $key }}
-              value: {{ $value | quote }}
-            {{- end }}
-          ports:
-            - containerPort: {{ .Values.containerPort }}
-          volumeMounts:
-            - name: config-volume
-              mountPath: /app/config
-              readOnly: true
+  containers:
+    - name: chatconsumer
+      image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      env:
+        {{- range $key, $value := .Values.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}
+      ports:
+        - containerPort: {{ .Values.containerPort }}
+      volumeMounts:
+        - name: config-volume
+          mountPath: /app/config/application.properties
+          subPath: application.properties
+          readOnly: true
