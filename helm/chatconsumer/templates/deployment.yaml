@@ -18,7 +18,7 @@ spec:
         - name: config-volume
           secret:
             secretName: chatconsumer-properties
-      containers:  # ⬅️ 들여쓰기 조정됨
+      containers:  # ✅ 이 위치에 있어야 함
         - name: chatconsumer
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
