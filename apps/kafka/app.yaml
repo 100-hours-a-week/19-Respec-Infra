@@ -6,15 +6,16 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://charts.bitnami.com/bitnami
+    repoURL: https://charts.bitnami.com/bitnami  # 외부 chart 사용
     chart: kafka
     targetRevision: 26.4.2
     helm:
       releaseName: kafka
+      values: |
+        # 👇 여기에 아주 간단한 override 넣어도 됨 (선택)
+        # replicas: 3
       valueFiles:
-        - values.yaml
-
-
+        - values.yaml     # 👉 이것은 이 app.yaml이 위치한 repo 기준 상대 경로임
   destination:
     server: https://kubernetes.default.svc
     namespace: kafka
@@ -24,10 +25,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-
-
-
-
-
-
-
