@@ -2,20 +2,20 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: kafka
-  namespace: argocd   # ArgoCD가 설치된 네임스페이스
+  namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/100-hours-a-week/19-Respec-Infra.git
-    targetRevision: prod
-    path: apps/kafka           # Git에서 Kafka values.yaml이 있는 경로
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: kafka
+    targetRevision: 26.4.2
     helm:
       releaseName: kafka
       valueFiles:
-        - values.yaml
+        - https://raw.githubusercontent.com/100-hours-a-week/19-Respec-Infra/prod/apps/kafka/values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: kafka           # Kafka가 배포될 네임스페이스
+    namespace: kafka
   syncPolicy:
     automated:
       prune: true
