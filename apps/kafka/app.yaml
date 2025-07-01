@@ -12,7 +12,7 @@ spec:
     helm:
       releaseName: kafka
       valueFiles:
-        - https://raw.githubusercontent.com/100-hours-a-week/19-Respec-Infra/prod/apps/kafka/values.yaml
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: kafka
