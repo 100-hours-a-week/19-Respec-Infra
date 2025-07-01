@@ -4,6 +4,11 @@ controller:
 
 broker:
   replicaCount: 3
+  config:
+    listeners: PLAINTEXT://:9092
+    advertised.listeners: PLAINTEXT://kafka.kafka.svc.cluster.local:9092
+    log.retention.hours: "168"
+    zookeeper.connect: kafka-zookeeper-headless:2181
 
 zookeeper:
   enabled: true
@@ -12,9 +17,3 @@ zookeeper:
 auth:
   clientProtocol: plaintext
   interBrokerProtocol: plaintext
-
-configurationOverrides:
-  listeners: PLAINTEXT://:9092
-  advertised.listeners: PLAINTEXT://kafka.kafka.svc.cluster.local:9092
-  log.retention.hours: 168
-  zookeeper.connect: kafka-zookeeper-headless:2181
