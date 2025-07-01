@@ -6,11 +6,13 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/100-hours-a-week/19-Respec-Infra.git
-    targetRevision: prod
-    path: apps/kafka
+    repoURL: https://charts.bitnami.com/bitnami
+    targetRevision: 26.4.2
+    chart: kafka
     helm:
       releaseName: kafka
+      valueFiles:
+        - https://raw.githubusercontent.com/100-hours-a-week/19-Respec-Infra/prod/apps/kafka/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: kafka
