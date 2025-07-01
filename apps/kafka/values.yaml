@@ -1,5 +1,6 @@
 controller:
-  enabled: false              # KRaft 모드 비활성화
+  enabled: false              # KRaft 비활성화
+  replicaCount: 0            # 반드시 0으로 설정
 
 broker:
   replicaCount: 3
