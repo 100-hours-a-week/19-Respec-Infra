@@ -1,0 +1,18 @@
+replicaCount: 3
+
+controller:
+  enabled: false  # KRaft 비활성화
+
+auth:
+  clientProtocol: plaintext
+  interBrokerProtocol: plaintext
+
+zookeeper:
+  enabled: true
+  replicaCount: 3
+
+configurationOverrides:
+  listeners: PLAINTEXT://:9092
+  advertised.listeners: PLAINTEXT://kafka.kafka.svc.cluster.local:9092
+  log.retention.hours: 168
+  zookeeper.connect: kafka-zookeeper-headless:2181
