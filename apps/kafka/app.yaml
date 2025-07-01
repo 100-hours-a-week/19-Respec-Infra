@@ -11,33 +11,10 @@ spec:
     targetRevision: 26.4.2
     helm:
       releaseName: kafka
-      values: |
-        kafka:
-          enableKraft: false
+      valueFiles:
+        - values.yaml
 
-        kraft:
-          enabled: false
 
-        zookeeper:
-          enabled: true
-          replicaCount: 3
-          persistence:
-            enabled: true
-
-        broker:
-          replicaCount: 3
-          config:
-            listeners: PLAINTEXT://:9092
-            advertised.listeners: PLAINTEXT://kafka.kafka.svc.cluster.local:9092
-            log.retention.hours: "168"
-            zookeeper.connect: kafka-zookeeper-headless:2181
-
-        auth:
-          clientProtocol: plaintext
-          interBrokerProtocol: plaintext
-
-        persistence:
-          enabled: true
   destination:
     server: https://kubernetes.default.svc
     namespace: kafka
@@ -47,3 +24,10 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+
+
+
+
+
+
+
