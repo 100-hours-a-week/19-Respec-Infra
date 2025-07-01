@@ -1,19 +1,31 @@
-controller:
-  enabled: false
-  replicaCount: 0
+kafka:
+  enableKraft: false
 
-broker:
-  replicaCount: 3
-  config:
-    listeners: PLAINTEXT://:9092
-    advertised.listeners: PLAINTEXT://kafka.kafka.svc.cluster.local:9092
-    log.retention.hours: "168"
-    zookeeper.connect: kafka-zookeeper-headless:2181
+kraft:
+  enabled: false
+
+controller:
+  replicaCount: 0
 
 zookeeper:
   enabled: true
   replicaCount: 3
+  persistence:
+    enabled: true
+
+broker:
+  replicaCount: 3
+  config: |
+    listeners=PLAINTEXT://:9092
+    advertised.listeners=PLAINTEXT://kafka.kafka.svc.cluster.local:9092
+    log.retention.hours=168
+    zookeeper.connect=kafka-zookeeper-headless:2181
+
 
 auth:
   clientProtocol: plaintext
   interBrokerProtocol: plaintext
+
+persistence:
+  enabled: true
+
