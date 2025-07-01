@@ -1,26 +1,26 @@
-project: default
-source:
-  repoURL: https://charts.bitnami.com/bitnami
-  chart: kafka
-  targetRevision: 26.4.2
-  helm:
-    values: |
-      replicaCount: 3
-      auth:
-        enabled: false
-      zookeeper:
-        auth:
-          enabled: false
-      persistence:
-        enabled: true
-        storageClass: "gp2" # ← 여기 반드시 존재하는 StorageClass로
-        size: 8Gi
-destination:
-  server: https://kubernetes.default.svc
-  namespace: kafka
-syncPolicy:
-  automated:
-    prune: true
-    selfHeal: true
-  syncOptions:
-    - CreateNamespace=true
+# project: default
+# source:
+#   repoURL: https://charts.bitnami.com/bitnami
+#   chart: kafka
+#   targetRevision: 26.4.2
+#   helm:
+#     values: |
+#       replicaCount: 3
+#       auth:
+#         enabled: false
+#       zookeeper:
+#         auth:
+#           enabled: false
+#       persistence:
+#         enabled: true
+#         storageClass: "gp2" # ← 여기 반드시 존재하는 StorageClass로
+#         size: 8Gi
+# destination:
+#   server: https://kubernetes.default.svc
+#   namespace: kafka
+# syncPolicy:
+#   automated:
+#     prune: true
+#     selfHeal: true
+#   syncOptions:
+#     - CreateNamespace=true
