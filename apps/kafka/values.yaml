@@ -1,13 +1,8 @@
 controller:
-  enabled: false              # KRaft 모드 비활성화
+  enabled: false
 
 broker:
-  replicaCount: 3             # 브로커 3개 구성
-  config:
-    listeners: PLAINTEXT://:9092
-    advertised.listeners: PLAINTEXT://kafka.kafka.svc.cluster.local:9092
-    log.retention.hours: 168
-    zookeeper.connect: kafka-zookeeper-headless:2181
+  replicaCount: 3
 
 zookeeper:
   enabled: true
@@ -16,3 +11,9 @@ zookeeper:
 auth:
   clientProtocol: plaintext
   interBrokerProtocol: plaintext
+
+configurationOverrides:
+  listeners: PLAINTEXT://:9092
+  advertised.listeners: PLAINTEXT://kafka.kafka.svc.cluster.local:9092
+  log.retention.hours: 168
+  zookeeper.connect: kafka-zookeeper-headless:2181
