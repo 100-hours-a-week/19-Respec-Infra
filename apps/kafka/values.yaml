@@ -47,8 +47,11 @@ persistence:
   storageClass: kafka-gp2-wffc  # 또는 gp3-csi 등 WaitForFirstConsumer 바인딩 모드 확인
 
 auth:
+  enabled: false
   clientProtocol: plaintext
   interBrokerProtocol: plaintext
   interBrokerListenerName: PLAINTEXT
-  enabled: false
+  sasl:
+    scram:
+      enabled: false
 
