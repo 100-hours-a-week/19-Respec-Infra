@@ -16,17 +16,8 @@ zookeeper:
     enabled: false
 
 broker:
-  replicaCount: 3
-  affinity:
-    nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 1
-          preference:
-            matchExpressions:
-              - key: topology.kubernetes.io/zone
-                operator: In
-                values:
-                  - ap-northeast-2c
+  replicaCount: 1  # 초기에는 1개로 테스트 후 3으로 확장하세요
+  affinity: {}      # zone 제한 제거
 
   config: |
     listeners=PLAINTEXT://:9092
@@ -39,6 +30,8 @@ broker:
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
+    - name: KAFKA_ZOOKEEPER_BOOTSTRAP_SCRAM_USERS
+      value: "false"
 
 persistence:
   enabled: true
