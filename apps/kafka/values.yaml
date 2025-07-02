@@ -33,6 +33,11 @@ broker:
     - name: KAFKA_ZOOKEEPER_BOOTSTRAP_SCRAM_USERS
       value: "false"
 
+    - name: KAFKA_CLIENT_USERS
+      value: ""
+    - name: KAFKA_INTER_BROKER_USER
+      value: ""
+
 persistence:
   enabled: true
   storageClass: kafka-gp2-wffc
