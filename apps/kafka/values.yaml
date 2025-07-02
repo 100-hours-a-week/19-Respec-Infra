@@ -17,12 +17,19 @@ zookeeper:
 
 broker:
   replicaCount: 3
+  
+
   config: |
     listeners=PLAINTEXT://:9092
-    advertised.listeners=PLAINTEXT://kafka.kafka.svc.cluster.local:9092
+    advertised.listeners=PLAINTEXT://$(POD_NAME).kafka-broker-headless.kafka.svc.cluster.local:9092
     log.retention.hours=168
     zookeeper.connect=kafka-zookeeper-headless:2181
 
+  extraEnvVars:
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
 
 auth:
   clientProtocol: plaintext
