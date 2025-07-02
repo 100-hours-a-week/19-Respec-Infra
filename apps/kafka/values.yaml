@@ -47,6 +47,10 @@ broker:
         fieldRef:
           fieldPath: metadata.name
 
+persistence:
+  enabled: true
+  ## 중요: StorageClass가 EBS이고, WaitForFirstConsumer인 클래스 사용
+  storageClass: gp2-csi  # 또는 gp3-csi 등 WaitForFirstConsumer 바인딩 모드 확인
 
 auth:
   clientProtocol: plaintext
@@ -58,7 +62,3 @@ auth:
     - dummy
   interBrokerUser: dummy
   interBrokerPassword: dummy
-
-persistence:
-  enabled: true
-
