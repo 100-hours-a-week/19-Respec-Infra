@@ -16,7 +16,7 @@ zookeeper:
     enabled: false
 
 broker:
-  replicaCount: 3
+  replicaCount: 1
 
   affinity:
     nodeAffinity:
