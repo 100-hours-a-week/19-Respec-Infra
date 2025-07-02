@@ -36,7 +36,7 @@ broker:
 persistence:
   enabled: true
   storageClass: kafka-gp2-wffc
-
+  
 auth:
   enabled: false
   clientProtocol: plaintext
@@ -45,3 +45,8 @@ auth:
   sasl:
     scram:
       enabled: false
+  existingSecret: ""
+  clientUsers: []
+  clientPasswords: []
+  interBrokerUser: ""
+  interBrokerPassword: ""
