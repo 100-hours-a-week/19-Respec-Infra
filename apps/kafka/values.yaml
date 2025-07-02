@@ -19,16 +19,11 @@ broker:
   replicaCount: 3
 
   affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              app.kubernetes.io/component: broker
-          topologyKey: "topology.kubernetes.io/zone"
     nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
               - key: topology.kubernetes.io/zone
                 operator: In
                 values:
