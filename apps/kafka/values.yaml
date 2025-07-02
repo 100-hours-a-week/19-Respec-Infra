@@ -48,14 +48,6 @@ broker:
           fieldPath: metadata.name
     - name: KAFKA_ZOOKEEPER_BOOTSTRAP_SCRAM_USERS
       value: "false"
-    - name: KAFKA_CLIENT_USERS
-      value: ""
-    - name: KAFKA_CLIENT_PASSWORDS
-      value: ""
-    - name: KAFKA_INTER_BROKER_USER
-      value: ""
-    - name: KAFKA_INTER_BROKER_PASSWORD
-      value: ""
 
 persistence:
   enabled: true
