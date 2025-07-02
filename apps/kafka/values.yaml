@@ -27,6 +27,12 @@ broker:
 auth:
   clientProtocol: plaintext
   interBrokerProtocol: plaintext
+  clientUsers:
+    - dummy
+  clientPasswords:
+    - dummy
+  interBrokerUser: dummy
+  interBrokerPassword: dummy
 
 persistence:
   enabled: true
