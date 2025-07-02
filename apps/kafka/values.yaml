@@ -26,8 +26,7 @@ broker:
               - key: topology.kubernetes.io/zone
                 operator: In
                 values:
-                  - ap-northeast-2a
-                  - ap-northeast-2b
+                  - ap-northeast-2c  
 
 
   config: |
