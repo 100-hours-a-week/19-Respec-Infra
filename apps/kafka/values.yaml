@@ -55,11 +55,6 @@ persistence:
 
 auth:
   enabled: false
-  existingSecret: ""
-  clientUsers: []
-  clientPasswords: []
-  interBrokerUser: ""
-  interBrokerPassword: ""
   sasl:
     scram:
       enabled: false
