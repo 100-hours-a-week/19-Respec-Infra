@@ -40,6 +40,9 @@ broker:
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
+    - name: KAFKA_ZOOKEEPER_BOOTSTRAP_SCRAM_USERS
+      value: "false"
+
 
 persistence:
   enabled: true
