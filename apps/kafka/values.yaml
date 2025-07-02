@@ -49,10 +49,6 @@ persistence:
 auth:
   clientProtocol: plaintext
   interBrokerProtocol: plaintext
-  existingSecret: kafka-user-passwords
-  clientUsers:
-    - dummy
-  clientPasswords:
-    - dummy
-  interBrokerUser: dummy
-  interBrokerPassword: dummy
+  interBrokerListenerName: PLAINTEXT
+  enabled: false
+
