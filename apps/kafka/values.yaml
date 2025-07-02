@@ -26,8 +26,7 @@ broker:
               - key: topology.kubernetes.io/zone
                 operator: In
                 values:
-                  - ap-northeast-2c  
-
+                  - ap-northeast-2c
 
   config: |
     listeners=PLAINTEXT://:9092
@@ -40,14 +39,10 @@ broker:
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
-    - name: KAFKA_ZOOKEEPER_BOOTSTRAP_SCRAM_USERS
-      value: "false"
-
 
 persistence:
   enabled: true
-  ## 중요: StorageClass가 EBS이고, WaitForFirstConsumer인 클래스 사용
-  storageClass: kafka-gp2-wffc  # 또는 gp3-csi 등 WaitForFirstConsumer 바인딩 모드 확인
+  storageClass: kafka-gp2-wffc
 
 auth:
   enabled: false
@@ -55,6 +50,6 @@ auth:
   interBrokerProtocol: plaintext
   interBrokerListenerName: PLAINTEXT
   sasl:
+    mechanism: plaintext
     scram:
       enabled: false
-
