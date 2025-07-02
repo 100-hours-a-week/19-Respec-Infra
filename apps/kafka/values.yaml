@@ -18,24 +18,17 @@ zookeeper:
 broker:
   replicaCount: 3
   affinity:
-    podAntiAffinity:
+    nodeAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
         - weight: 1
-          podAffinityTerm:
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/component: broker
-            topologyKey: topology.kubernetes.io/zone
-
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
+          preference:
+            matchExpressions:
               - key: topology.kubernetes.io/zone
                 operator: In
                 values:
                   - ap-northeast-2a
                   - ap-northeast-2b
+
 
   config: |
     listeners=PLAINTEXT://:9092
