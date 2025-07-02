@@ -27,6 +27,7 @@ broker:
 auth:
   clientProtocol: plaintext
   interBrokerProtocol: plaintext
+  existingSecret: kafka-user-passwords
   clientUsers:
     - dummy
   clientPasswords:
