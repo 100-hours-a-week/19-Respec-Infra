@@ -30,8 +30,8 @@ broker:
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
-    # - name: KAFKA_ZOOKEEPER_BOOTSTRAP_SCRAM_USERS
-    #   value: "false"
+    - name: KAFKA_ZOOKEEPER_BOOTSTRAP_SCRAM_USERS
+      value: "false"
 
 persistence:
   enabled: true
@@ -39,9 +39,9 @@ persistence:
 
 auth:
   enabled: false
-  existingSecret: ""
-  clientUsers: []
-  clientPasswords: []
-  interBrokerUser: ""
-  interBrokerPassword: ""
-
+  clientProtocol: plaintext
+  interBrokerProtocol: plaintext
+  interBrokerListenerName: PLAINTEXT
+  sasl:
+    scram:
+      enabled: false
