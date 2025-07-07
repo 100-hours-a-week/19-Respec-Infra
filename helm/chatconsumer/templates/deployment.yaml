@@ -31,6 +31,6 @@ spec:
             - containerPort: {{ .Values.containerPort }}
           volumeMounts:
             - name: config-volume
-              mountPath: /app/config/chatconsumer-app-secret
+              mountPath: /app/config/application.properties
               subPath: application.properties
               readOnly: true
