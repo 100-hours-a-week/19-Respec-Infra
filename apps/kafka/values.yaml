@@ -50,8 +50,15 @@ broker:
     - security.inter.broker.protocol=PLAINTEXT
     - log.retention.hours=168
     - zookeeper.connect=kafka-zookeeper-headless:2181
-
   extraEnvVars:
+    - name: KAFKA_CFG_LISTENERS
+      value: PLAINTEXT://:9092
+    - name: KAFKA_CFG_ADVERTISED_LISTENERS
+      value: PLAINTEXT://$(POD_NAME).kafka-broker-headless.kafka.svc.cluster.local:9092
+    - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+      value: PLAINTEXT:PLAINTEXT
+    - name: KAFKA_CFG_SECURITY_INTER_BROKER_PROTOCOL
+      value: PLAINTEXT
     - name: POD_NAME
       valueFrom:
         fieldRef:
