@@ -7,14 +7,14 @@ spec:
   project: default
   source:
     repoURL: https://github.com/100-hours-a-week/19-Respec-Infra.git
-    targetRevision: main
+    targetRevision: prod
     path: helm/backend-main
     helm:
       valueFiles:
         - values/dev.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: backend-dev       # 배포 대상 네임스페이스
+    namespace: backend-main       # 배포 대상 네임스페이스
   syncPolicy:
     automated:
       selfHeal: true
