@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: 115313776476.dkr.ecr.ap-northeast-2.amazonaws.com/chatconsumer-backend-dev
-  tag: dev-f34df19
+  tag: dev-ad7363d
   pullPolicy: Always
  
 imagePullSecrets:
