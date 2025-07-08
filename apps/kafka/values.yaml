@@ -47,19 +47,25 @@ broker:
   clientUser: ""
   clientPassword: ""
 
-# ✨ 이 부분을 false로 설정해야 SASL, SCRAM 관련 설정/Secret을 제거함
 auth:
   enabled: false
 
 sasl:
   enabled: false
-  enabledMechanisms: ""
-  interBrokerMechanism: ""
-  controllerMechanism: ""
+  enabledMechanisms: "PLAIN"              # dummy 값
+  interBrokerMechanism: "PLAIN"           # dummy 값
+  controllerMechanism: "PLAIN"            # dummy 값
   client:
-    users: []
+    users: ["dummy"]                      # dummy 값
+    passwords: ["dummy"]                  # dummy 값
 
-
+listeners:
+  client:
+    protocol: PLAINTEXT
+  interbroker:
+    protocol: PLAINTEXT
+  controller:
+    protocol: PLAINTEXT
 
 persistence:
   enabled: true
