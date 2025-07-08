@@ -15,8 +15,6 @@ zookeeper:
   auth:
     enabled: false
 
-
-
 broker:
   replicaCount: 1
   affinity:
@@ -44,14 +42,9 @@ broker:
         fieldRef:
           fieldPath: metadata.name
 
+# ✨ 이 부분을 false로 설정해야 SASL, SCRAM 관련 설정/Secret을 제거함
 auth:
-  enabled: true       # 중요: false면 configOverrides 무시됨
-  sasl:
-    scram:
-      enabled: false
-  clientProtocol: plaintext
-  interBrokerProtocol: plaintext
-  interBrokerListenerName: PLAINTEXT          
+  enabled: false
 
 persistence:
   enabled: true
