@@ -23,7 +23,7 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:115313776476:certificate/25a254b7-38c9-4654-9da7-112f0de38ffc
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:115313776476:certificate/eae89fe4-2ba9-424c-a0ce-ce90e08d981e
     alb.ingress.kubernetes.io/group.name: specranking-apps
 
   hosts:
