@@ -53,7 +53,18 @@ auth:
   clientProtocol: plaintext
   interBrokerProtocol: plaintext
   interBrokerListenerName: PLAINTEXT
-sasl: {}
+
+sasl:
+  enabledMechanisms: ""
+  controllerMechanism: ""
+  interBrokerMechanism: ""
+  client:
+    users: []
+  interbroker:
+    user: ""
+  controller:
+    user: ""
+
 
 persistence:
   enabled: true
