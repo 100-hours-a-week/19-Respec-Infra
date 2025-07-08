@@ -15,6 +15,14 @@ zookeeper:
   auth:
     enabled: false
 
+auth:
+  enabled: false
+  sasl:
+    scram:
+      enabled: false
+  clientProtocol: plaintext
+  interBrokerProtocol: plaintext
+  interBrokerListenerName: PLAINTEXT
 broker:
   replicaCount: 1
 
@@ -51,11 +59,4 @@ persistence:
   enabled: true
   storageClass: kafka-gp2-wffc
 
-auth:
-  enabled: false
-  sasl:
-    scram:
-      enabled: false
-  clientProtocol: plaintext
-  interBrokerProtocol: plaintext
-  interBrokerListenerName: PLAINTEXT
+
