@@ -44,8 +44,8 @@ broker:
       value: PLAINTEXT
     - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
       value: PLAINTEXT
-    - name: KAFKA_ZOOKEEPER_BOOTSTRAP_SCRAM_USERS
-      value: "false"
+    # - name: KAFKA_ZOOKEEPER_BOOTSTRAP_SCRAM_USERS
+    #   value: "false"
 
 persistence:
   enabled: true
