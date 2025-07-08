@@ -24,7 +24,6 @@ auth:
 
 sasl:
   enabled: false
-  enabledMechanisms: ""
   interBrokerMechanism: ""
   controllerMechanism: ""
   client:
