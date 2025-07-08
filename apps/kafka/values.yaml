@@ -37,12 +37,12 @@ broker:
       - inter.broker.listener.name=PLAINTEXT
       - zookeeper.connect=kafka-zookeeper-headless.kafka.svc.cluster.local:2181
 
-
   extraEnvVars:
     - name: POD_NAME
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
+
   existingSecret: ""
   interBrokerUser: ""
   interBrokerPassword: ""
@@ -54,20 +54,11 @@ auth:
 
 sasl:
   enabled: false
-  enabledMechanisms: "PLAIN"              # dummy 값
-  interBrokerMechanism: "PLAIN"           # dummy 값
-  controllerMechanism: "PLAIN"            # dummy 값
+  enabledMechanisms: ""
+  interBrokerMechanism: ""
+  controllerMechanism: ""
   client:
-    users: ["dummy"]                      # dummy 값
-    passwords: ["dummy"]                  # dummy 값
-
-listeners:
-  client:
-    protocol: PLAINTEXT
-  interbroker:
-    protocol: PLAINTEXT
-  controller:
-    protocol: PLAINTEXT
+    users: []
 
 persistence:
   enabled: true
