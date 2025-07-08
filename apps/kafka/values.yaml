@@ -1,22 +1,37 @@
+# Kraft 비활성화
 kafka:
   enableKraft: false
 
 kraft:
-  enabled: false
+  enabled: false   # 이건 없어도 되지만, chart 내부에서 두 키가 분리되어 있다면 유지
 
-controller:
-  replicaCount: 0
-
+# Zookeeper 설정
 zookeeper:
   enabled: true
   replicaCount: 3
   persistence:
     enabled: true
   auth:
-    enabled: false
+    enabled: false  # Zookeeper 자체 인증 비활성화
 
+# Kafka 인증 설정 (중앙 통제)
+auth:
+  enabled: false
+  zookeeper:
+    enabled: false  # Kafka → Zookeeper 인증도 비활성화
+
+sasl:
+  enabled: false
+  enabledMechanisms: []         # "" → [] 로 수정
+  interBrokerMechanism: ""
+  controllerMechanism: ""
+  client:
+    users: []
+
+# Kafka Broker 설정
 broker:
   replicaCount: 1
+
   affinity:
     nodeAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
@@ -27,7 +42,9 @@ broker:
                 operator: In
                 values:
                   - ap-northeast-2c
-  configurationConfigMap: ""  
+
+  configurationConfigMap: ""  # 외부 설정 없이 overrides 사용
+
   configOverrides:
     server:
       - listeners=PLAINTEXT://:9092
@@ -49,17 +66,7 @@ broker:
   clientUser: ""
   clientPassword: ""
 
-auth:
-  enabled: false
-
-sasl:
-  enabled: false
-  enabledMechanisms: ""
-  interBrokerMechanism: ""
-  controllerMechanism: ""
-  client:
-    users: []
-
+# 저장소 설정
 persistence:
   enabled: true
   storageClass: kafka-gp2-wffc
