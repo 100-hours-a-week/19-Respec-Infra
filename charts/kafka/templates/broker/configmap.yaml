@@ -13,11 +13,11 @@ metadata:
 data:
   {{- if .Values.broker.configOverrides.server }}
   server.properties: |-
-    {{- if .Values.broker.configOverrides.server }}
     {{- range .Values.broker.configOverrides.server }}
     {{ . }}
     {{- end }}
-    {{- else }}
+  {{- else }}
+  server.properties: |-
     # Listeners configuration
     listeners={{ include "kafka.listeners" ( dict "isController" false "context" $ ) }}
     listener.security.protocol.map={{ include "kafka.securityProtocolMap" . }}
@@ -38,7 +38,7 @@ data:
     {{- include "kafka.commonConfig" . | nindent 4 }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.extraConfig "context" $ ) | nindent 4 }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.broker.extraConfig "context" $ ) | nindent 4 }}
-    {{- end }}
+  {{- end }}
 {{- end }}
 
 # {{- /*
