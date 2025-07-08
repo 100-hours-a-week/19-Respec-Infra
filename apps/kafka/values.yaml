@@ -30,16 +30,13 @@ broker:
                 values:
                   - ap-northeast-2c
   configurationConfigMap: ""  
-  configOverrides:
-    server:
-      - listeners=PLAINTEXT://:9092
-      - advertised.listeners=PLAINTEXT://$(POD_NAME).kafka-broker-headless.kafka.svc.cluster.local:9092
-      - listener.security.protocol.map=PLAINTEXT:PLAINTEXT
-      - security.inter.broker.protocol=PLAINTEXT
-      - inter.broker.listener.name=PLAINTEXT
-      - log.retention.hours=168
-      - zookeeper.connect=kafka-zookeeper-headless:2181
-
+  config:
+    server.properties: |-
+      listeners=PLAINTEXT://:9092
+      advertised.listeners=PLAINTEXT://$(POD_NAME).kafka-broker-headless.kafka.svc.cluster.local:9092
+      listener.security.protocol.map=PLAINTEXT:PLAINTEXT
+      security.inter.broker.protocol=PLAINTEXT
+      inter.broker.listener.name=PLAINTEXT
   extraEnvVars:
     - name: POD_NAME
       valueFrom:
