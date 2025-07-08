@@ -37,7 +37,7 @@ broker:
         fieldRef:
           fieldPath: metadata.name
     - name: KAFKA_CFG_ADVERTISED_LISTENERS
-      value: PLAINTEXT://$(POD_NAME).kafka-broker-headless.kafka.svc.cluster.local:9092
+      value: PLAINTEXT://kafka-broker-0.kafka-broker-headless.kafka.svc.cluster.local:9092
     - name: KAFKA_CFG_LISTENERS
       value: PLAINTEXT://:9092
     - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
