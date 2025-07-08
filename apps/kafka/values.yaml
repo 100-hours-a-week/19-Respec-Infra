@@ -16,13 +16,14 @@ zookeeper:
     enabled: false
 
 auth:
-  enabled: false
+  enabled: true       # 중요: false면 configOverrides 무시됨
   sasl:
     scram:
       enabled: false
   clientProtocol: plaintext
   interBrokerProtocol: plaintext
   interBrokerListenerName: PLAINTEXT
+
 broker:
   replicaCount: 1
 
@@ -36,6 +37,7 @@ broker:
                 operator: In
                 values:
                   - ap-northeast-2c
+
   configOverrides:
     server:
       - listeners=PLAINTEXT://:9092
@@ -45,18 +47,13 @@ broker:
       - inter.broker.listener.name=PLAINTEXT
       - log.retention.hours=168
       - zookeeper.connect=kafka-zookeeper-headless:2181
-      
+
   extraEnvVars:
     - name: POD_NAME
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
 
-
-
-
 persistence:
   enabled: true
   storageClass: kafka-gp2-wffc
-
-
