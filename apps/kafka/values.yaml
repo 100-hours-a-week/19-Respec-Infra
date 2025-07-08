@@ -28,9 +28,24 @@ sasl:
   client:
     users: []
 
-# Kafka Broker 설정
 broker:
   replicaCount: 1
+
+  extraEnvVars:
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: KAFKA_CFG_ADVERTISED_LISTENERS
+      value: PLAINTEXT://$(POD_NAME).kafka-broker-headless.kafka.svc.cluster.local:9092
+    - name: KAFKA_CFG_LISTENERS
+      value: PLAINTEXT://:9092
+    - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+      value: PLAINTEXT:PLAINTEXT
+    - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
+      value: PLAINTEXT
+    - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+      value: kafka-zookeeper-headless.kafka.svc.cluster.local:2181
 
   affinity:
     nodeAffinity:
@@ -43,22 +58,15 @@ broker:
                 values:
                   - ap-northeast-2c
 
-  configurationConfigMap: ""  # 외부 설정 없이 overrides 사용
+  configurationConfigMap: ""         # ✅ 유지 가능
+  configOverrides: {}                # ✅ 이 줄 생략해도 되지만 빈 map으로 명시해도 안전
 
-  configOverrides:
-    server:
-      - listeners=PLAINTEXT://:9092
-      - advertised.listeners=PLAINTEXT://$(POD_NAME).kafka-broker-headless.kafka.svc.cluster.local:9092
-      - listener.security.protocol.map=PLAINTEXT:PLAINTEXT
-      - security.inter.broker.protocol=PLAINTEXT
-      - inter.broker.listener.name=PLAINTEXT
-      - zookeeper.connect=kafka-zookeeper-headless.kafka.svc.cluster.local:2181
+  existingSecret: ""
+  interBrokerUser: ""
+  interBrokerPassword: ""
+  clientUser: ""
 
-  extraEnvVars:
-    - name: POD_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
+
 
   existingSecret: ""
   interBrokerUser: ""
