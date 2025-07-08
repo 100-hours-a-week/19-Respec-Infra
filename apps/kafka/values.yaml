@@ -4,7 +4,9 @@ kafka:
 
 kraft:
   enabled: false   # 이건 없어도 되지만, chart 내부에서 두 키가 분리되어 있다면 유지
-
+  
+controller:
+  replicaCount: 0    
 # Zookeeper 설정
 zookeeper:
   enabled: true
