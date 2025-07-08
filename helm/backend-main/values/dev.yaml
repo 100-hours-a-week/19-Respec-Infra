@@ -33,9 +33,9 @@ ingress:
           pathType: Prefix
           backend:
             service:
-              name: backend-main
+              name: chatconsumer 
               port:
-                number: 80
+                number: 9090
                 
         - path: /
           pathType: Prefix
