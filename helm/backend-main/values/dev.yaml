@@ -48,6 +48,7 @@ ingress:
   tls:
     - hosts:
         - dev.specranking.net
+        - api.dev.specranking.net 
 
 resources:
   requests:
