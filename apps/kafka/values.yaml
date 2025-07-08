@@ -28,23 +28,6 @@ broker:
                 operator: In
                 values:
                   - ap-northeast-2c
-
-  extraEnvVars:
-    - name: POD_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
-    - name: KAFKA_CFG_LISTENERS
-      value: PLAINTEXT://:9092
-    - name: KAFKA_CFG_ADVERTISED_LISTENERS
-      value: PLAINTEXT://$(POD_NAME).kafka-broker-headless.kafka.svc.cluster.local:9092
-    - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
-      value: PLAINTEXT:PLAINTEXT
-    - name: KAFKA_CFG_SECURITY_INTER_BROKER_PROTOCOL
-      value: PLAINTEXT
-    - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
-      value: PLAINTEXT
-
   configOverrides:
     server:
       - listeners=PLAINTEXT://:9092
@@ -54,6 +37,15 @@ broker:
       - inter.broker.listener.name=PLAINTEXT
       - log.retention.hours=168
       - zookeeper.connect=kafka-zookeeper-headless:2181
+      
+  extraEnvVars:
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+
+
+
 
 persistence:
   enabled: true
