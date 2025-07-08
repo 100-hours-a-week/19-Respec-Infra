@@ -35,6 +35,8 @@ broker:
       - listener.security.protocol.map=PLAINTEXT:PLAINTEXT
       - security.inter.broker.protocol=PLAINTEXT
       - inter.broker.listener.name=PLAINTEXT
+      - zookeeper.connect=kafka-zookeeper-headless.kafka.svc.cluster.local:2181
+
 
   extraEnvVars:
     - name: POD_NAME
