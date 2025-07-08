@@ -15,18 +15,10 @@ zookeeper:
   auth:
     enabled: false
 
-auth:
-  enabled: true       # 중요: false면 configOverrides 무시됨
-  sasl:
-    scram:
-      enabled: false
-  clientProtocol: plaintext
-  interBrokerProtocol: plaintext
-  interBrokerListenerName: PLAINTEXT
+
 
 broker:
   replicaCount: 1
-  configurationConfigMap: ""  
   affinity:
     nodeAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
@@ -37,7 +29,7 @@ broker:
                 operator: In
                 values:
                   - ap-northeast-2c
-
+  configurationConfigMap: ""  
   configOverrides:
     server:
       - listeners=PLAINTEXT://:9092
@@ -53,6 +45,15 @@ broker:
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
+
+auth:
+  enabled: true       # 중요: false면 configOverrides 무시됨
+  sasl:
+    scram:
+      enabled: false
+  clientProtocol: plaintext
+  interBrokerProtocol: plaintext
+  interBrokerListenerName: PLAINTEXT          
 
 persistence:
   enabled: true
