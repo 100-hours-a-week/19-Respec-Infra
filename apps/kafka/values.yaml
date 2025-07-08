@@ -22,7 +22,7 @@ auth:
 
 sasl:
   enabled: false
-  enabledMechanisms: []         # "" → [] 로 수정
+  enabledMechanisms: ""
   interBrokerMechanism: ""
   controllerMechanism: ""
   client:
