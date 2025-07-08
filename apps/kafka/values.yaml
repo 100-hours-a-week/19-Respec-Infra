@@ -60,7 +60,11 @@ broker:
                   - ap-northeast-2c
 
   configurationConfigMap: ""         # ✅ 유지 가능
-  configOverrides: {}                # ✅ 이 줄 생략해도 되지만 빈 map으로 명시해도 안전
+  configOverrides:
+    server:
+      - security.inter.broker.protocol=PLAINTEXT
+      - inter.broker.listener.name=PLAINTEXT
+
 
   existingSecret: ""
   interBrokerUser: ""
