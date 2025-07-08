@@ -41,6 +41,11 @@ broker:
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
+  existingSecret: ""
+  interBrokerUser: ""
+  interBrokerPassword: ""
+  clientUser: ""
+  clientPassword: ""
 
 # ✨ 이 부분을 false로 설정해야 SASL, SCRAM 관련 설정/Secret을 제거함
 auth:
