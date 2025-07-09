@@ -31,13 +31,13 @@ spec:
             httpGet:
               path: /api/health
               port: {{ .Values.service.targetPort }}
-            initialDelaySeconds: 300
+            initialDelaySeconds: 150
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /api/health
               port: {{ .Values.service.targetPort }}
-            initialDelaySeconds: 300
+            initialDelaySeconds: 100
             periodSeconds: 5
           volumeMounts:
             - name: config-volume
