@@ -28,6 +28,10 @@ ingress:
     alb.ingress.kubernetes.io/group.name: specranking-apps
     alb.ingress.kubernetes.io/backend-protocol: HTTP
     alb.ingress.kubernetes.io/connection-idle-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/enable-websocket: "true"
+
   hosts:
     - host: dev.specranking.net
       paths:
