@@ -14,7 +14,7 @@ service:
   port: 80
   targetPort: 8080
   nodePort: 30080
-
+  sessionAffinity: ClientIP
 ingress:
   enabled: true
   ingressClassName: alb
