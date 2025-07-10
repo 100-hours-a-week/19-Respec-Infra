@@ -58,10 +58,10 @@ ingress:
 
 resources:
   requests:
-    cpu: 2
+    cpu: 1
     memory: 1.5Gi
   limits:
-    cpu: 2
+    cpu: 1
     memory: 2Gi
 
 # env:
