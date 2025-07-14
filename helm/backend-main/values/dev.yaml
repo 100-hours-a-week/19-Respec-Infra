@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: 115313776476.dkr.ecr.ap-northeast-2.amazonaws.com/specranking-backend-dev
-  tag: dev-1444b19
+  tag: dev-48316b2
   pullPolicy: Always
 
 imagePullSecrets:
